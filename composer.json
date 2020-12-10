@@ -1,21 +1,34 @@
 {
-  "name": "",
-  "description": "",
+  "name": "8fold/ef-laravel-dms-universals",
+  "description": "Universal helper files for 8fold sites based on Laravel using the custom Document Management System",
   "type": "library",
   "license": "MIT",
-  "authors": [],
+  "authors": [
+    {
+      "name": "Josh Bruce",
+      "email": "josh@8fold.pro"
+    }
+  ],
   "require": {
-    "php": "~7"
+    "php": "~7",
+    "8fold/php-foldable": "^1.3",
+    "8fold/php-shoop": "^0.10.16",
+    "8fold/php-shoop-shelf": "^0.8.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "~9.1"
+    "phpunit/phpunit": "~9.1",
+    "orchestra/testbench": "^6.6",
+    "orchestra/testbench-browser-kit": "^6.3"
   },
   "autoload": {
     "psr-4": {
+      "Eightfold\\DmsHelpers\\": "./src"
     }
   },
   "autoload-dev": {
     "psr-4": {
+      "Eightfold\\DmsHelpers\\Tests\\": "./tests",
+      "Eightfold\\Foldable\\Tests\\": "./vendor/8fold/php-foldable/tests/"
     }
   },
   "config": {
