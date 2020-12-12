@@ -7,6 +7,9 @@ use Eightfold\Foldable\Tests\PerformantEqualsTestFilter as AssertEquals;
 
 use Eightfold\DmsHelpers\Tests\MockProvider\ContentHelpers\Title;
 
+/**
+ * @group Title
+ */
 class TitleHelperTest extends TestCase
 {
     protected function getPackageProviders($app)
@@ -23,7 +26,7 @@ class TitleHelperTest extends TestCase
             __DIR__ ."/content-folder",
             "string",
             8.07,
-            401
+            414 // ^ 401
         )->unfoldUsing(
             Title::localRoot()
         );
@@ -38,7 +41,7 @@ class TitleHelperTest extends TestCase
             "Root title",
             "string",
             10.45, // 10.24, // 9.44, // 9.38, // ^ 5.23, // ^ 0.34, // 0.33, // 0.32,
-            1051 // ^ 428 // 419 // 418 // 417 // ^ 12
+            1342 // ^ 1051 // ^ 428 // 419 // 418 // 417 // ^ 12
         )->unfoldUsing(
             Title::fold("/")
         );

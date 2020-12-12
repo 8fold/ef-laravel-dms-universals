@@ -26,7 +26,7 @@ class MetaHelperTest extends TestCase
             __DIR__ ."/content-folder",
             "string",
             10.19,
-            425 // 424 // 411
+            428 // 427 // 426 // 425 // 424 // 411
         )->unfoldUsing(
             Meta::localRoot()
         );
@@ -40,7 +40,7 @@ class MetaHelperTest extends TestCase
         AssertEquals::applyWith(
             '<meta name="viewport" content="width=device-width,initial-scale=1"><link type="image/x-icon" rel="icon" href="/assets/favicons/favicon.ico"><link rel="apple-touch-icon" href="/assets/favicons/apple-touch-icon.png" sizes="180x180"><link rel="image/png" href="/assets/favicons/favicon-32x32.png" sizes="32x32"><link rel="image/png" href="/assets/favicons/favicon-16x16.png" sizes="16x16"><meta content="website" property="og:type"><meta content="Root title" property="og:title"><meta content="http://localhost" property="og:url"><meta content="Description unavailable" property="og:description"><meta content="http://localhost/media/poster.png" property="og:image"><link rel="stylesheet" href="/css/main.css"><script src="/js/main.js"></script>',
             "string",
-            33.35, // ^ 23.21, // 22.07, // ^ 11.88, // 11.69, // 11.29,
+            33.71, // 33.35, // ^ 23.21, // 22.07, // ^ 11.88, // 11.69, // 11.29,
             1705 // ^ 609
         )->unfoldUsing(
             Meta::fold("/")
@@ -56,7 +56,7 @@ class MetaHelperTest extends TestCase
             '',
             "string",
             10.56, // 0.47, // 0.41,
-            1072
+            1351 // 1207 // 1072
         )->unfoldUsing(
             Meta::fold("/")->description()
         );
@@ -106,7 +106,7 @@ class MetaHelperTest extends TestCase
         AssertEquals::applyWith(
             'http://localhost/media/poster.png',
             "string",
-            0.53, // 0.36,
+            0.57, // 0.53, // 0.36,
             1
         )->unfoldUsing(
             Meta::fold("/hello")->poster()

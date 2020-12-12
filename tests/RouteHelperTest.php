@@ -8,6 +8,9 @@ use Eightfold\Foldable\Tests\PerformantEqualsTestFilter as AssertEquals;
 use Eightfold\DmsHelpers\Tests\MockProvider\Controllers\AssetsController;
 use Eightfold\DmsHelpers\Tests\MockProvider\Controllers\MediaController;
 
+/**
+ * @group Route
+ */
 class RouteHelperTest extends TestCase
 {
     protected function getPackageProviders($app)
@@ -47,7 +50,7 @@ class RouteHelperTest extends TestCase
         AssertEquals::applyWith(
             200,
             "integer",
-            17.9, // 17.19,
+            47.35, // ^ 17.9, // 17.19,
             3632 // 3628
         )->unfoldUsing(
             $this->call("GET", "/assets/favicons/favicon.ico")->getStatusCode()
@@ -56,7 +59,7 @@ class RouteHelperTest extends TestCase
         AssertEquals::applyWith(
             200,
             "integer",
-            1,
+            2.41, // ^ 1,
             2
         )->unfoldUsing(
             $this->call("GET", "/media/poster.png")->getStatusCode()

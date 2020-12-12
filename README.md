@@ -46,6 +46,22 @@ The `.media` subfolder structure follows that of the content folder itself.
 
 A sample Laravel provider and content folder are available in the `tests` folder.
 
+### Site tracking
+
+> If you choose to use the site tracking solution offered by the DMS, you agree to absolve 8fold and its developers of all responsibility and liability related to compliance with applicable data privacy laws.
+
+With that out of the way, the site tracker:
+
+- DOES NOT store personal information of the user.
+- DOES store certain aspects of server state and client request:
+	- current server date and time in [.UTC](universal time code),
+	- current requested path, and
+	- previously requested path.
+- DOES use standard list of automated users (bots) to differentiate human users from computer users.
+- WILL hash (scramble) an unique identifier provided by the user of the script to further conceal the identity of the human user, their client information, and their user agent.
+
+It is recommended that the unique identifier passed to the site tracker is a server-generated session identifier modified with [salt](https://en.wikipedia.org/wiki/Salt_(cryptography)) and [pepper](https://en.wikipedia.org/wiki/Pepper_(cryptography)). To distinguish the session id passed to the site tracker from the one stored on the client and server to identify the same user across multiple pages.
+
 ## Details
 
 It's helps with:

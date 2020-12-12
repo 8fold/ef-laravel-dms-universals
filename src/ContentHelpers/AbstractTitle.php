@@ -2,36 +2,16 @@
 
 namespace Eightfold\DmsHelpers\ContentHelpers;
 
-use Eightfold\Foldable\Fold;
+use Eightfold\DmsHelpers\AbstractBridge;
 
 use Eightfold\ShoopShelf\Shoop;
 
-abstract class AbstractTitle extends Fold
+abstract class AbstractTitle extends AbstractBridge
 {
-    abstract static public function localRoot(): string;
-
-    private $uriString; // path for user (web-client) request; where the user is.
-
-    public function __construct(string $uriString)
-    {
-        $this->uriString = $uriString;
-    }
-
-    protected function uriString(): string
-    {
-        return $this->uriString;
-    }
-
-    protected function uriParts(): array
-    {
-        return Shoop::this($this->uriString())->divide("/")
-            ->drop(fn($p) => empty($p))->efToArray();
-    }
-
     public function unfold(): string
     {
-        $store = Shoop::store($this->localRoot())->append($this->uriParts());
-        $titles = Shoop::this($this->uriParts())->each(function($p) use (&$store) {
+        $store = Shoop::store($this->local())->append($this->clientPathParts());
+        $titles = Shoop::this($this->clientPathParts())->each(function($p) use (&$store) {
             $content = $store->append(["content.md"]);
             if ($content->isFile()->unfold() and
                 $content->markdown()->meta()->hasAt("title")->unfold()
