@@ -15,12 +15,17 @@ abstract class FileController extends Controller
 
     public function __invoke(...$extras)
     {
-        $extras = Shoop::this($extras);
+        $extras = $extras[0];
+        $extras = Shoop::this($extras)->divide("/");
         if ($extras->length()->isGreaterThanOrEqualTo(2)->reversed()->unfold()) {
             abort(404);
         }
 
-        $store = Shoop::store(static::localRoot())->append($extras->unfold());
+        $store = Shoop::store(static::localRoot())->append([
+            $extras->first()->prepend(".")->unfold()
+        ])->append(
+            $extras->dropFirst()->unfold()
+        );
         if ($store->isFile()->reversed()->unfold()) {
             abort(404);
         }
