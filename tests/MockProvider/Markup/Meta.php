@@ -14,4 +14,9 @@ class Meta extends AbstractMeta
         return Shoop::this(__DIR__)->divide("/")->dropLast(2)
             ->append(["content-folder"])->efToString("/");
     }
+
+    public function title(): string
+    {
+        return Title::fold($this->local(), $this->requestPath())->unfold();
+    }
 }
