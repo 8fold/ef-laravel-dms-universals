@@ -8,11 +8,13 @@ use Eightfold\ShoopShelf\Shoop;
 use Eightfold\ShoopShelf\FluentTypes\ESStore;
 use Eightfold\Markup\UIKit;
 
-use Eightfold\DmsHelpers\Tests\MockProvider\Markup\Title;
+use Eightfold\DmsHelpers\Markup\Title;
 
 abstract class Meta extends Markup
 {
     private $type = "website";
+
+    abstract public function title(): string;
 
     public function type(string $type = "")// : string|static
     {
@@ -45,7 +47,7 @@ abstract class Meta extends Markup
         }
 
         return [
-            Title::fold($this->local(), $this->requestPath())->unfold(),
+            $this->title(),
             url()->current(),
             $this->description(),
             $this->poster(),
