@@ -26,6 +26,7 @@ abstract class FileController extends Controller
         ])->append(
             $extras->dropFirst()->unfold()
         );
+
         if ($store->isFile()->reversed()->unfold()) {
             abort(404);
         }
