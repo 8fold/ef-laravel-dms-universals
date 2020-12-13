@@ -3,9 +3,11 @@ declare(strict_types=1);
 
 namespace Eightfold\DmsHelpers\Controllers;
 
+use Eightfold\DmsHelpers\AbstractBridge;
+
 use Eightfold\ShoopShelf\Shoop;
 
-abstract class AbstractImageController
+abstract class AbstractImageController extends AbstractBridge
 {
     abstract static public function localRoot(): string;
 

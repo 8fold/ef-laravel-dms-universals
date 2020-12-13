@@ -26,6 +26,12 @@ abstract class AbstractBridge extends Fold
      */
     abstract static public function localRoot(): string;
 
+    /**
+     * @todo Laravel routes that use invokable controllers do not seem to accept a
+     * custom constructor.
+     *
+     * @param string $clientPath [description]
+     */
     public function __construct(string $clientPath)
     {
         $this->clientPath = $clientPath;

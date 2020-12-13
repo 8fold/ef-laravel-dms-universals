@@ -5,6 +5,7 @@ namespace Eightfold\DmsHelpers\Tests;
 use Orchestra\Testbench\BrowserKit\TestCase;
 use Eightfold\Foldable\Tests\PerformantEqualsTestFilter as AssertEquals;
 
+use Eightfold\DmsHelpers\Tests\MockProvider\Controllers\RootController;
 use Eightfold\DmsHelpers\Tests\MockProvider\Controllers\AssetsController;
 use Eightfold\DmsHelpers\Tests\MockProvider\Controllers\MediaController;
 
@@ -20,9 +21,36 @@ class RouteHelperTest extends TestCase
 
     /**
      * @test
+     * @group current
+     *
+     * @todo Update AbstractBridge to inherit from laravel base controller.
+     *       The IoC container doesn't seem to allow for custom constructors.
+     *       We receive a binding exception error when using those controllers in routes as invokable controllers. This could be avoided by using callbacks in the route; however, this has proven to make routes difficult to read. The only thing the route is looking for is a redirect, abort, or string (ultimately). Because this package is flagged as being dependent on Laravel it's not the end of the world; however, would be nice to decouple from Laravel at a later date.
+     *
+     */
+    public function root_has_expected_content()
+    {
+        // $this->visit("/")->see("Hello, World!");
+
+        // $this->visit("/assets/favicons/favicon.ico");
+
+        $this->visit("/media/poster.png");
+    }
+
+    /**
+     * @test
      */
     public function local_root_is_expected()
     {
+        AssertEquals::applyWith(
+            __DIR__ ."/content-folder",
+            "string",
+            8.93,
+            321
+        )->unfoldUsing(
+            RootController::localRoot()
+        );
+
         AssertEquals::applyWith(
             __DIR__ ."/content-folder/.assets",
             "string",
