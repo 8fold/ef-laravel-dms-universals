@@ -25,7 +25,7 @@ class MetaHelperTest extends TestCase
         AssertEquals::applyWith(
             __DIR__ ."/content-folder",
             "string",
-            10.19,
+            12.24, // 10.19,
             428 // 427 // 426 // 425 // 424 // 411
         )->unfoldUsing(
             Meta::localRoot()
