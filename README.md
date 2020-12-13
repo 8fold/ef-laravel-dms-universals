@@ -16,6 +16,8 @@ composer require 8fold/ef-dms-laravel-universals
 
 ## Usage
 
+> Core principle: The URL is key.
+
 We divide content into three major groups:
 
 1. text-based,
@@ -32,17 +34,31 @@ The following is an example content folder structure:
     - /favicons
       - favicon.ico
   - /.media
-    - poster.png
+  	- /.images
+      - poster.png
+    - /path
+      - /to
+        - /sub-url
+          - poster.png
   - content.md
 ```
 
-The content folder acts as the root directory; `content.md` files represent the index content for the url.
+The content folder primarily holds text-based content. The folder structure matrches the URL paths available on the site. If a user puts in a URL and the path does not lead to directory with a `content.md` file, this will result in a `404 error`.
 
-The `.assets` and `.media` folders hold multimedia files.
+The `.assets` and `.media` folders both hold files included or linked to from the with the content pages.
 
-The `.assets` folder is for multimedia that is accessed by multiple pages of the site while the `.media` folder is for multimedia elements related to a primary url.
+The `.assets` folder is for more globally accessed files; favicons, ui accents, and the like. Each file is placed at the root of the a category folder within the `.assets` folder. For example, we want to get to a `ui` asset with the filename `filename.ext`; the URL to the individual asset would be `https://domain.com/assets/ui/filename.ext` - and the file path would be - `[assets root]/.assets/ui/filename.ext`
 
-The `.media` subfolder structure follows that of the content folder itself.
+The `.media` folder is for files associated with one or more specific pages; embedded images, audio files, and so on. Each file is placed within a hidden folder named after the media type category, pluralized. For example, we want to get to an audio file for a page with the URL `https://domain.com/media/audios/hello/world/filename.mp4` - and the file path would be - `[media root]/hello/world/.audios/filename.mp4`
+
+Note: "audios" is apparently [an acceptable pluralized version](https://www.wordhippo.com/what-is/the-plural-of/audio.html) of "audio" in this context as we are using it as shorthand for "a collection of multiple audio files." So, `audio/mp4` should be stored in `[media root]/[url path]/.audios.
+
+There are two required route prefixes for accessing files:
+
+- assets
+- media
+
+This separates text from non-text content, maintains a mirrored folder structure for easier navigation by the user, and allows users to have a URL path that includes words like "applications" or "media" or "images."
 
 A sample Laravel provider and content folder are available in the `tests` folder.
 

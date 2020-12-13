@@ -1,15 +1,16 @@
 <?php
 
-namespace Eightfold\DmsHelpers\ContentHelpers;
+namespace Eightfold\DmsHelpers\Markup;
 
-use Eightfold\DmsHelpers\AbstractBridge;
+use Eightfold\DmsHelpers\Markup;
 
 use Eightfold\ShoopShelf\Shoop;
+use Eightfold\ShoopShelf\FluentTypes\ESStore;
 use Eightfold\Markup\UIKit;
 
-use Eightfold\DmsHelpers\Tests\MockProvider\ContentHelpers\Title;
+use Eightfold\DmsHelpers\Tests\MockProvider\Markup\Title;
 
-abstract class AbstractMeta extends AbstractBridge
+abstract class Meta extends Markup
 {
     private $type = "website";
 
@@ -44,7 +45,7 @@ abstract class AbstractMeta extends AbstractBridge
         }
 
         return [
-            Title::fold($this->local(), $this->clientPath())->unfold(),
+            Title::fold($this->local(), $this->requestPath())->unfold(),
             url()->current(),
             $this->description(),
             $this->poster(),
@@ -55,7 +56,7 @@ abstract class AbstractMeta extends AbstractBridge
     public function description(): string
     {
         $store = Shoop::store($this->local())
-            ->append($this->clientPathParts())
+            ->append($this->requestPathParts())
             ->append(["content.md"]);
         if ($store->isFile()->unfold()) {
             $meta = $store->markdown()->meta();
@@ -63,7 +64,7 @@ abstract class AbstractMeta extends AbstractBridge
                 return $meta->at("description")->unfold();
 
             } elseif ($store->markdown()->body()->isEmpty()->reversed()->unfold()) {
-                return $store->markdown()->body()->divide("\n\n")->each(
+                $description = $store->markdown()->body()->divide("\n\n")->each(
                     function($block, $i, &$build, &$break) {
                         $block = trim($block);
                         $block = Shoop::this($block);
@@ -72,8 +73,13 @@ abstract class AbstractMeta extends AbstractBridge
                             $build[] = $block->unfold();
                         }
                     }
-                )->first()->divide(" ", false, 50)->dropLast()->asString(" ")
-                ->append("...")->unfold();
+                )->first()->divide(" ", false);
+
+                if ($description->length()->isGreaterThan(50)->unfold()) {
+                    return $description->first(50)->asString(" ")->append("...")
+                        ->unfold();
+                }
+                return $description->efToString(" ");
             }
         }
         return "";
@@ -81,27 +87,38 @@ abstract class AbstractMeta extends AbstractBridge
 
     public function poster(): string
     {
-        $store = Shoop::store(static::localRoot())->append([".media"])
-            ->append($this->clientPathParts());
-        $posters = Shoop::this($this->clientPathParts())->each(function($p) use (&$store) {
-            $content = $store->append(["poster.png"]);
-            if ($content->isFile()->unfold()) {
-                $store = $store->up();
-                return $content->unfold();
-            }
+        $store = Shoop::store($this->local())->append([".media"])
+            ->append($this->requestPathParts());
+
+        $posters = Shoop::this($this->requestPathParts())->each(
+            function($p) use (&$store) {
+                $content = $store->append([".images", "poster.png"]);
+                if ($content->isFile()->unfold()) {
+                    $store = $store->up();
+                    return $content->unfold();
+                }
         })->drop(fn($p) => empty($p));
 
         if ($posters->efIsEmpty() and
-            Shoop::store(static::localRoot())->append([".media", "poster.png"])
-                ->isFile()->unfold()
+            $this->rootPosterStore()->isFile()->unfold()
         ) {
-            $posters = $posters->append([
-                Shoop::store(static::localRoot())->append([".media", "poster.png"])->unfold()
-            ]);
+            $posters = $posters->append([$this->rootPosterStore()->unfold()]);
         }
+
         return url(
-            $posters->first()->divide(".media", false, 2)->last()->prepend("/media")->unfold()
+            $posters->first()->divide(".media", false, 2)->last()
+                ->divide(".images", false, 2)->first()
+                ->prepend("/media/images")->append("poster.png")->unfold()
         );
+    }
+
+    private function rootPosterStore(): ESStore
+    {
+        return Shoop::store($this->local())->append([
+            ".media",
+            ".images",
+            "poster.png"
+        ]);
     }
 
     public function unfold(): string

@@ -5,6 +5,7 @@ namespace Eightfold\DmsHelpers\Tests;
 use Orchestra\Testbench\BrowserKit\TestCase;
 use Eightfold\Foldable\Tests\PerformantEqualsTestFilter as AssertEquals;
 
+use Eightfold\DmsHelpers\Tests\MockProvider\Controllers\RootController;
 use Eightfold\DmsHelpers\Tests\MockProvider\Controllers\AssetsController;
 use Eightfold\DmsHelpers\Tests\MockProvider\Controllers\MediaController;
 
@@ -21,8 +22,33 @@ class RouteHelperTest extends TestCase
     /**
      * @test
      */
+    public function root_has_expected_content()
+    {
+        $this->visit("/hello")->see("Hello, World!");
+
+        $response = $this->call("GET", "/assets/favicons/favicon.ico");
+
+        $this->assertEquals(200, $response->getStatusCode());
+
+        $response = $this->call("GET", "/media/images/poster.png");
+
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+
+    /**
+     * @test
+     */
     public function local_root_is_expected()
     {
+        AssertEquals::applyWith(
+            __DIR__ ."/content-folder",
+            "string",
+            8.93,
+            321
+        )->unfoldUsing(
+            RootController::localRoot()
+        );
+
         AssertEquals::applyWith(
             __DIR__ ."/content-folder/.assets",
             "string",
@@ -39,30 +65,6 @@ class RouteHelperTest extends TestCase
             1
         )->unfoldUsing(
             MediaController::localRoot()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function images()
-    {
-        AssertEquals::applyWith(
-            200,
-            "integer",
-            47.35, // ^ 17.9, // 17.19,
-            3632 // 3628
-        )->unfoldUsing(
-            $this->call("GET", "/assets/favicons/favicon.ico")->getStatusCode()
-        );
-
-        AssertEquals::applyWith(
-            200,
-            "integer",
-            2.41, // ^ 1,
-            2
-        )->unfoldUsing(
-            $this->call("GET", "/media/poster.png")->getStatusCode()
         );
     }
 }

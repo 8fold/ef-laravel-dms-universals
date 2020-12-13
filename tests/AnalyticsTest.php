@@ -35,7 +35,7 @@ class AalyticsTest extends TestCase
             16.31,
             398
         )->unfoldUsing(
-            SiteTracker::localRoot()
+            SiteTracker::fold(__DIR__ ."/tracker-folder", 1234)->local()
         );
     }
 
