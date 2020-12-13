@@ -31,7 +31,7 @@ The following is an example content folder structure:
 ```bash
 - /content-folder
   - /.assets
-    - /favicons
+    - /.favicons
       - favicon.ico
   - /.media
   	- /.images
