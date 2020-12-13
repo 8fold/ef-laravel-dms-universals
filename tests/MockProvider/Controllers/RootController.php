@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace Eightfold\DmsHelpers\Tests\MockProvider\Controllers;
 
-use Eightfold\DmsHelpers\AbstractBridge;
+use Eightfold\DmsHelpers\Controller;
 
-use Eightfold\Shoop\Shoop;
+use Eightfold\ShoopShelf\Shoop;
 
-class RootController extends AbstractBridge
+class RootController extends Controller
 {
     static public function localRoot(): string
     {
@@ -17,6 +17,7 @@ class RootController extends AbstractBridge
 
     public function __invoke(...$extras)
     {
-        return "Hello, World!";
+        return Shoop::store(static::localRoot())->append(["content.md"])
+            ->markdown()->html()->unfold();
     }
 }

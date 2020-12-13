@@ -6,6 +6,10 @@ use Eightfold\DmsHelpers\Tests\MockProvider\Controllers\MediaController;
 
 Route::get("/", RootController::class);
 
+Route::get("/hello", RootController::class);
+
+Route::get("/hello/world", RootController::class);
+
 Route::prefix("assets")->group(function() {
     Route::get("{type}/{image}", AssetsController::class)->name("assets");
 });

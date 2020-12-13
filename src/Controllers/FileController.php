@@ -3,20 +3,20 @@ declare(strict_types=1);
 
 namespace Eightfold\DmsHelpers\Controllers;
 
-use Eightfold\DmsHelpers\AbstractBridge;
+use Eightfold\DmsHelpers\Controller;
 
 use Eightfold\ShoopShelf\Shoop;
 
-abstract class AbstractImageController extends AbstractBridge
+abstract class FileController extends Controller
 {
     abstract static public function localRoot(): string;
+
+    abstract static public function pathPrefix(): string;
 
     public function __invoke(...$extras)
     {
         $extras = Shoop::this($extras);
-        if (Shoop::this(static::localRoot())->divide("/")->last()->is(".assets")->unfold() and
-            $extras->length()->is(2)->reversed()->unfold()
-        ) {
+        if ($extras->length()->isGreaterThanOrEqualTo(2)->reversed()->unfold()) {
             abort(404);
         }
 
@@ -25,11 +25,9 @@ abstract class AbstractImageController extends AbstractBridge
             abort(404);
         }
 
-        $extension = $extras->last()->divide(".")->last()->unfold();
-
         return response()->file(
             $store->unfold(),
-            ["Content-Type: image/{$extension}"]
+            [$store->mimeType()->prepend("Content-Type: ")->unfold()]
         );
     }
 }

@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Eightfold\DmsHelpers\Tests\MockProvider\ContentHelpers;
+namespace Eightfold\DmsHelpers\Tests\MockProvider\Markup;
 
-use Eightfold\DmsHelpers\ContentHelpers\AbstractTitle;
+use Eightfold\DmsHelpers\Markup\Meta as AbstractMeta;
 
 use Eightfold\ShoopShelf\Shoop;
 
-class Title extends AbstractTitle
+class Meta extends AbstractMeta
 {
     static public function localRoot(): string
     {

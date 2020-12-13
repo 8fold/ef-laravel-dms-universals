@@ -9,20 +9,6 @@ use Jaybizzle\CrawlerDetect\CrawlerDetect;
 
 use Eightfold\ShoopShelf\Shoop;
 use Eightfold\ShoopShelf\FluentTypes\ESStore;
-// use Illuminate\Support\Facades\Route;
-// use Illuminate\Support\Facades\Hash;
-
-
-
-// use Eightfold\Shoop\{
-//     Helpers\Type,
-//     ESString
-// };
-
-// use Eightfold\ShoopExtras\{
-//     Shoop,
-//     ESStore
-// };
 
 /**
  * An abstract class for tracking session requests across pages.
@@ -31,7 +17,7 @@ use Eightfold\ShoopShelf\FluentTypes\ESStore;
  */
 abstract class AbstractSiteTracker extends Fold
 {
-    private $localRoot;
+    private $local;
     private $id;
 
     private $crawlerDetector;
@@ -41,13 +27,13 @@ abstract class AbstractSiteTracker extends Fold
 
     /**
      *
-     * @param string $localRoot The fully qualified path to the root directory where the site tracking data should be stored.
+     * @param string $local The fully qualified path to the root directory where the site tracking data should be stored.
      * @param string $id        A unique identifier which will be hashed, if you use the session ID, it's recommended you modify it in some way before passing it to the site tracker.
      */
-    public function __construct(string $localRoot, string $id)
+    public function __construct(string $local, string $id)
     {
-        $this->localRoot = $localRoot;
-        $this->id        = md5($id); // Hash the id
+        $this->local = $local;
+        $this->id    = md5($id); // Hash the id
     }
 
     /**
@@ -65,9 +51,9 @@ abstract class AbstractSiteTracker extends Fold
     /**
      * @return string Local root for file storage.
      */
-    public function localRoot(): string
+    public function local(): string
     {
-        return $this->localRoot;
+        return $this->local;
     }
 
     /**
@@ -200,7 +186,7 @@ abstract class AbstractSiteTracker extends Fold
     private function sessionStore(): ESStore
     {
         return Shoop::store(
-            $this->localRoot()
+            $this->local()
         )->append([
             $this->sessionPath()
         ]);
@@ -217,7 +203,7 @@ abstract class AbstractSiteTracker extends Fold
         ->unfold();
 
         return Shoop::store(
-            $this->localRoot()
+            $this->local()
         )->append($pathParts);
     }
 
@@ -234,7 +220,7 @@ abstract class AbstractSiteTracker extends Fold
         ->unfold();
 
         return Shoop::store(
-            $this->localRoot()
+            $this->local()
         )->append($pathParts);
     }
 }
