@@ -24,6 +24,8 @@ abstract class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    private $store;
+
     abstract static public function localRoot(): string;
 
     protected function local(): string
@@ -47,5 +49,17 @@ abstract class Controller extends BaseController
         return Shoop::this(
             $this->requestPath()
         )->divide("/")->drop(fn($p) => empty($p))->efToArray();
+    }
+
+    protected function requestStore()
+    {
+        if ($this->store === null) {
+            $this->store = Shoop::store(
+                $this->local()
+            )->append(
+                $this->requestPathParts()
+            );
+        }
+        return $this->store;
     }
 }
