@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d720a4bd080e11aa58b3944b906e2617",
+    "content-hash": "e9347359ff56e89acbb61fad08114ece",
     "packages": [
         {
             "name": "8fold/commonmark-abbreviations",
@@ -116,16 +116,16 @@
         },
         {
             "name": "8fold/laravel-markup",
-            "version": "0.0.46",
+            "version": "0.0.47",
             "source": {
                 "type": "git",
                 "url": "https://github.com/8fold/laravel-markup.git",
-                "reference": "a09cddc059e9a438d13b4abba3ee71373895731b"
+                "reference": "e18db319cb8436b8e65b4df2344ddc815830a4ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/8fold/laravel-markup/zipball/a09cddc059e9a438d13b4abba3ee71373895731b",
-                "reference": "a09cddc059e9a438d13b4abba3ee71373895731b",
+                "url": "https://api.github.com/repos/8fold/laravel-markup/zipball/e18db319cb8436b8e65b4df2344ddc815830a4ed",
+                "reference": "e18db319cb8436b8e65b4df2344ddc815830a4ed",
                 "shasum": ""
             },
             "require": {
@@ -156,7 +156,7 @@
             "description": "A library for implementing HTML UI components in Laravel projects.",
             "support": {
                 "issues": "https://github.com/8fold/laravel-markup/issues",
-                "source": "https://github.com/8fold/laravel-markup/tree/0.0.46"
+                "source": "https://github.com/8fold/laravel-markup/tree/0.0.47"
             },
             "funding": [
                 {
@@ -168,7 +168,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-11-09T20:05:40+00:00"
+            "time": "2020-12-14T04:24:57+00:00"
         },
         {
             "name": "8fold/php-foldable",
