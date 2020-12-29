@@ -86,6 +86,46 @@ It's helps with:
 - social media sharing metadata and tags, and
 - nudging creators to create assets for a full web experience.
 
+### 8fold Design System
+
+Seems there are so many design systems out there - and we have ours.
+
+For this dicussion design systems off two primary benefits:
+
+1. Design decisions made once.
+2. Change one thing, in one place, to update as many things in as many places.
+
+Given this package is meant primarily for use with 8fold sites. The design system pretty much doubles down on that. While we can use the server-side and HTML elements on clients sites, we typically only use the 8fold Design System for 8fold company sites.j
+
+With that said, it's modular like most things we build; so, nothing really stopping your from using parts or all of it if you want to.
+
+We partition the CSS conceptually into:
+
+- Size,
+- Appearance,
+- Positioning, and
+- Typography.
+
+Size, appearance, and positioning are considered global as effects can be applied to almost any element. Typography, on the other hand, are CSS properties that affect text content only.
+
+We restrict ourselves to work within a 9-point scale for most things to create a consistent naming convention:
+
+- 100
+- 200
+- 300
+- 400
+- 500
+- 600
+- 700
+- 800
+- 900
+
+Consider `font-weight` 400 is "normal" 700 is "bold" and 100 would be similar to "ultra-thin." Now consider a scale for a `border` where 100 is 1px, 200 is 2px, 300 is 3px, and so on. And, `font-size` where 100 is 1ex, 200 is 2ex, 300 is 4ex, 400 is 8ex, and so on. This gives us room to add something like 150 and increase gaps between values.
+
+For certain sizing units, we tend to use `ex` where height is important and `ch` where width takes precendent; for example, line-height would use `ex` and the width of a container for text would be set using `ch`. We typically favor `rem` to establish a root size from which other sizes can be calculated relatively.
+
+Our approach is mobile-first, which is a misnomer. Our approach is shortest viewing distance by default using screen resolution (width) as a way of inferring optimal viewing distance. So, the smaller the screen, the closer we presume you will be; therefore, by default, we start at the smallest sizes and work our way up from there. We prefer scaling over snapping and breaking.
+
 ## Other
 
 {links or descriptions or license, versioning, and governance}
