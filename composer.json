@@ -14,7 +14,7 @@
     "8fold/php-foldable": "^1.3",
     "8fold/php-shoop": "^0.10.16",
     "8fold/php-shoop-shelf": "^0.8.0",
-    "8fold/laravel-markup": "^0.0.48",
+    "8fold/laravel-markup": "^0.0.49",
     "jaybizzle/crawler-detect": "^1.2"
   },
   "require-dev": {
