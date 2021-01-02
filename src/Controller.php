@@ -48,7 +48,7 @@ abstract class Controller extends BaseController
     {
         return Shoop::this(
             $this->requestPath()
-        )->divide("/")->drop(function($p) { return empty($p); })->efToArray();
+        )->divide("/")->drop(fn($p) => empty($p))->efToArray();
     }
 
     protected function requestStore()
