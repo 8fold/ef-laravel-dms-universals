@@ -15,7 +15,8 @@
     "8fold/php-shoop": "^0.10.17",
     "8fold/php-shoop-shelf": "^0.8.0",
     "8fold/laravel-markup": "^0.0.50",
-    "jaybizzle/crawler-detect": "^1.2"
+    "jaybizzle/crawler-detect": "^1.2",
+    "hashids/hashids": "^4.1"
   },
   "require-dev": {
     "phpunit/phpunit": "~9.1",
